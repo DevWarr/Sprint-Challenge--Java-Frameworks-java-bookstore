@@ -1,7 +1,6 @@
 package com.lambdaschool.bookstore.services;
 
 import com.lambdaschool.bookstore.exceptions.ResourceNotFoundException;
-import com.lambdaschool.bookstore.models.Quote;
 import com.lambdaschool.bookstore.models.User;
 import com.lambdaschool.bookstore.models.UserRoles;
 import com.lambdaschool.bookstore.repository.RoleRepository;
@@ -79,11 +78,6 @@ public class UserServiceImpl implements UserDetailsService, UserService
         }
         newUser.setUserRoles(newRoles);
 
-        for (Quote q : user.getQuotes())
-        {
-            newUser.getQuotes().add(new Quote(q.getQuote(), newUser));
-        }
-
         return userrepos.save(newUser);
     }
 
@@ -120,14 +114,6 @@ public class UserServiceImpl implements UserDetailsService, UserService
                     for (UserRoles ur : user.getUserRoles())
                     {
                         rolerepos.insertUserRoles(id, ur.getRole().getRoleid());
-                    }
-                }
-
-                if (user.getQuotes().size() > 0)
-                {
-                    for (Quote q : user.getQuotes())
-                    {
-                        currentUser.getQuotes().add(new Quote(q.getQuote(), currentUser));
                     }
                 }
 
