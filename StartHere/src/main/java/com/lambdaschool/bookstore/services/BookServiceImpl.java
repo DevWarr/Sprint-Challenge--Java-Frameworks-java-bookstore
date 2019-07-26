@@ -45,8 +45,9 @@ public class BookServiceImpl implements BookService
     }
 
     @Override
-    public Book saveAuthor(long bookid, long authorid) {
-        return null;
+    public void saveAuthor(long bookid, long authorid)
+    {
+        bookrepo.insertBookAuthors(bookid, authorid);
     }
 
     @Override

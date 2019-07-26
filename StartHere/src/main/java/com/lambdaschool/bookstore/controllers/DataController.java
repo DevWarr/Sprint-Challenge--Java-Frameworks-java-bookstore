@@ -29,4 +29,13 @@ public class DataController
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
+
+    @PostMapping(value = "/books/{bookid}/authors/{authorid}")
+    public ResponseEntity<?> updateBookAuthor(@PathVariable long bookid, @PathVariable long authorid, HttpServletRequest request)
+    {
+        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        bookService.saveAuthor(bookid, authorid);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }
