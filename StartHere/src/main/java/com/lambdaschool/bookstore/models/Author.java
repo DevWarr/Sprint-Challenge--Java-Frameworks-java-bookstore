@@ -30,14 +30,9 @@ public class Author extends Auditable
     public Author()
     {}
 
-    public Author(String lastname, String firstname, List<BookAuthors> bookAuthors) {
+    public Author(String lastname, String firstname) {
         this.lastname = lastname;
         this.firstname = firstname;
-        for(BookAuthors ba : bookAuthors)
-        {
-            ba.setAuthor(this);
-        }
-        this.bookAuthors = bookAuthors;
     }
 
     // Getters and Setters
