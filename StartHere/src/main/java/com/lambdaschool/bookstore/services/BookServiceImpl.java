@@ -2,6 +2,7 @@ package com.lambdaschool.bookstore.services;
 
 import com.lambdaschool.bookstore.exceptions.ResourceNotFoundException;
 import com.lambdaschool.bookstore.models.Book;
+import com.lambdaschool.bookstore.repository.AuthorRepository;
 import com.lambdaschool.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,9 @@ public class BookServiceImpl implements BookService
 {
     @Autowired
     BookRepository bookrepo;
+
+    @Autowired
+    AuthorRepository authorrepo;
 
     @Override
     public List<Book> findAll(Pageable pageable)
@@ -45,13 +49,21 @@ public class BookServiceImpl implements BookService
     }
 
     @Override
-    public void saveAuthor(long bookid, long authorid)
+    public void saveAuthor(long bookid, long authorid) throws ResourceNotFoundException
     {
+        // Test to make sure the book and author exist via id
+        bookrepo.findById(bookid).orElseThrow(() -> new ResourceNotFoundException(Long.toString(bookid)));
+        authorrepo.findById(authorid).orElseThrow(() -> new ResourceNotFoundException(Long.toString(authorid)));
+
         bookrepo.insertBookAuthors(bookid, authorid);
     }
 
     @Override
-    public void delete(long id) {
-
+    public void delete(long id) throws ResourceNotFoundException
+    {
+        bookrepo.findById(id).orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
+        // Delete NOT ONLY the book via id BUT ALSO any rows inside the "bookAuthors" table that has the bookid.
+        bookrepo.deleteBookAuthorsbyBookId(id);
+        bookrepo.deleteById(id);
     }
 }

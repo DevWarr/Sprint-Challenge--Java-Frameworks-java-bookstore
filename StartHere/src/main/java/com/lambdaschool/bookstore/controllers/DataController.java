@@ -38,4 +38,13 @@ public class DataController
         bookService.saveAuthor(bookid, authorid);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @DeleteMapping(value = "books/{id}")
+    public ResponseEntity<?> deleteBook(@PathVariable long id, HttpServletRequest request)
+    {
+        logger.trace(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed");
+
+        bookService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
