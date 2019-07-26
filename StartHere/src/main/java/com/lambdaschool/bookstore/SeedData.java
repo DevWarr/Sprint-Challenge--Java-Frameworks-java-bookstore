@@ -1,6 +1,8 @@
 package com.lambdaschool.bookstore;
 
 import com.lambdaschool.bookstore.models.*;
+import com.lambdaschool.bookstore.repository.AuthorRepository;
+import com.lambdaschool.bookstore.repository.BookRepository;
 import com.lambdaschool.bookstore.services.RoleService;
 import com.lambdaschool.bookstore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +22,12 @@ public class SeedData implements CommandLineRunner
     @Autowired
     UserService userService;
 
+    // Not sure I should be adding directly to the repo, but we don't have any services set up for POST author or book
+    @Autowired
+    BookRepository bookrepo;
 
-
+    @Autowired
+    AuthorRepository authorrepo;
 
     @Override
     public void run(String[] args) throws Exception
@@ -73,26 +79,38 @@ public class SeedData implements CommandLineRunner
         Author a5 = new Author("Gallinger", "George");
         Author a6 = new Author("Stewart", "Ian");
 
+        authorrepo.save(a1);
+        authorrepo.save(a2);
+        authorrepo.save(a3);
+        authorrepo.save(a4);
+        authorrepo.save(a5);
+        authorrepo.save(a6);
+
         // Books
         ArrayList<BookAuthors> wrote = new ArrayList<>();
         wrote.add(new BookAuthors(new Book(), a6));
         Book book3 = new Book("Flatterland", "9780738206752", 2001, wrote);
+        bookrepo.save(book3);
 
         wrote = new ArrayList<>();
         wrote.add(new BookAuthors(new Book(), a2));
         Book book1 = new Book("Digital Fortess", "9788489367012", 2007, wrote);
+        bookrepo.save(book1);
 
         wrote = new ArrayList<>();
         wrote.add(new BookAuthors(new Book(), a2));
         Book book2 = new Book("The Da Vinci Code", "9780307474278", 2009, wrote);
+        bookrepo.save(book2);
 
         wrote = new ArrayList<>();
         wrote.add(new BookAuthors(new Book(), a3));
         wrote.add(new BookAuthors(new Book(), a5));
         Book book4 = new Book("Essentials of Finance", "1314241651234", wrote);
+        bookrepo.save(book4);
 
         wrote = new ArrayList<>();
         wrote.add(new BookAuthors(new Book(), a4));
         Book book5 = new Book("Calling Texas Home", "1885171382134", 2000, wrote);
+        bookrepo.save(book5);
     }
 }
