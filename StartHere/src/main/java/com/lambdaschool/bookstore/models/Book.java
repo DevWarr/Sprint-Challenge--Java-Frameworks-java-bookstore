@@ -21,7 +21,7 @@ public class Book extends Auditable
     @Column(unique = true, nullable = false)
     private String ISBN; // ISBN number
 
-    private int copy; // Copyright year
+    private Integer copy; // Copyright year
 
     @OneToMany(mappedBy = "book",
             cascade = CascadeType.ALL)
@@ -81,7 +81,7 @@ public class Book extends Auditable
         this.ISBN = ISBN;
     }
 
-    public int getCopy() {
+    public Integer getCopy() {
         return copy;
     }
 

@@ -9,7 +9,7 @@ public interface BookService
 {
     List<Book> findAll(Pageable pageable);
 
-    Book updateInfo(Book book);
+    Book updateInfo(Book book, long id);
 
     Book saveAuthor(long bookid, long authorid);
 
